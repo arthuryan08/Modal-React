@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useRef, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
+import { useSpring, animated } from 'react-spring'
+
 import { MdClose } from 'react-icons/md'
 import IphoneImg from '../assets/iphone-small.jpg'
 
@@ -52,7 +54,7 @@ const ModalContent = styled.div`
     color: #fff;
     border: none;
   }
-`;
+`
 
 const ClosedModalButton = styled(MdClose)`
   cursor: pointer;
@@ -66,10 +68,21 @@ const ClosedModalButton = styled(MdClose)`
 `
 
 export const Modal = ({showModal, setShowModal}) => {
+  const modalRef = useRef()
+
+  const animation = useSpring({
+    config: {
+      duration: 250
+    },
+    opacity: showModal ? 1 : 0,
+    transform: showModal ? `translateX(0%)` : `translateX(-100%)`
+  })
+
   return (
     <>
       {showModal ? (
-        <Background>
+        <Background ref={modalRef}>
+          <animated.div style={animation}>
           <ModalWrapper>
             <ModalImg src={IphoneImg} alt='Novo Iphone 13'/>
             <ModalContent>
@@ -79,6 +92,7 @@ export const Modal = ({showModal, setShowModal}) => {
             </ModalContent>
             <ClosedModalButton aria-label='Close modal' onClick={() => setShowModal(!showModal)}/>
           </ModalWrapper>
+          </animated.div>
         </Background>
       ) : null}
     </>

@@ -78,10 +78,16 @@ export const Modal = ({showModal, setShowModal}) => {
     transform: showModal ? `translateX(0%)` : `translateX(-100%)`
   })
 
+  const closeModal = e => {
+    if(modalRef.current === e.target){
+      setShowModal(false)
+    }
+  }
+
   return (
     <>
       {showModal ? (
-        <Background ref={modalRef}>
+        <Background ref={modalRef} onClick={closeModal}>
           <animated.div style={animation}>
           <ModalWrapper>
             <ModalImg src={IphoneImg} alt='Novo Iphone 13'/>

@@ -1,5 +1,8 @@
 import React from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
+import { Modal } from './components/Modal';
+import { GlobalStyle } from './globalStyle';
 
 const Container = styled.div`
   display: flex;
@@ -20,10 +23,19 @@ cursor: pointer;
 `
 
 function App() {
+
+  const [showModal, setShowModal] = useState(false)
+
+  const handleOpenModal = () => {
+    setShowModal(!showModal)
+  }
+
   return (
     <>
       <Container>
-        <Button>I'm a modal</Button>
+        <Button onClick={handleOpenModal}>I'm a modal</Button>
+        <Modal showModal={showModal} setShowModal={setShowModal}/>
+        <GlobalStyle />
       </Container>
     </>
   );
